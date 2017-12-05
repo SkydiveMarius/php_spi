@@ -189,7 +189,7 @@ PHP_METHOD(Spi, __destruct)
 
     _this_ce = Z_OBJCE_P(_this_zval);
 
-    int fd = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "device", 6, 0 TSRMLS_CC));
+    int fd = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "device", 6, 0, NULL TSRMLS_CC));
     close(fd);
 }
 /* }}} __destruct */
@@ -216,10 +216,10 @@ PHP_METHOD(Spi, transfer)
 
     int count = zend_hash_num_elements(data_hash);
 
-    int fd = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "device", 6, 0 TSRMLS_CC));
-    uint8_t bits = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "bits", 4, 0 TSRMLS_CC));
-    uint32_t speed = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "speed", 5, 0 TSRMLS_CC));
-    uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0 TSRMLS_CC));
+    int fd = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "device", 6, 0, NULL TSRMLS_CC));
+    uint8_t bits = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "bits", 4, 0, NULL TSRMLS_CC));
+    uint32_t speed = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "speed", 5, 0, NULL TSRMLS_CC));
+    uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0, NULL TSRMLS_CC));
 
     unsigned char *tx;
     tx = emalloc(count);
@@ -277,11 +277,11 @@ PHP_METHOD(Spi, blockTransfer)
 
     data_hash = HASH_OF(data);
 
-    int fd         = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "device", 6, 0 TSRMLS_CC));
-    uint8_t mode   = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "mode", 4, 0 TSRMLS_CC));
-    uint8_t bits   = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "bits", 4, 0 TSRMLS_CC));
-    uint32_t speed = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "speed", 5, 0 TSRMLS_CC));
-    uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0 TSRMLS_CC));
+    int fd         = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "device", 6, 0, NULL TSRMLS_CC));
+    uint8_t mode   = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "mode", 4, 0, NULL TSRMLS_CC));
+    uint8_t bits   = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "bits", 4, 0, NULL TSRMLS_CC));
+    uint32_t speed = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "speed", 5, 0, NULL TSRMLS_CC));
+    uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0, NULL TSRMLS_CC));
 
     int row_count    = zend_hash_num_elements(data_hash);
     int column_count = 0;
@@ -380,11 +380,11 @@ PHP_METHOD(Spi, getInfo)
 
     _this_ce = Z_OBJCE_P(_this_zval);
 
-    char *device = Z_STRVAL_P(zend_read_property(_this_ce, _this_zval, "device_name", 11, 0 TSRMLS_CC));
-    uint8_t mode = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "mode", 4, 0 TSRMLS_CC));
-    uint8_t bits = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "bits", 4, 0 TSRMLS_CC));
-    uint32_t speed = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "speed", 5, 0 TSRMLS_CC));
-    uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0 TSRMLS_CC));
+    char *device = Z_STRVAL_P(zend_read_property(_this_ce, _this_zval, "device_name", 11, 0, NULL TSRMLS_CC));
+    uint8_t mode = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "mode", 4, 0, NULL TSRMLS_CC));
+    uint8_t bits = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "bits", 4, 0, NULL TSRMLS_CC));
+    uint32_t speed = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "speed", 5, 0, NULL TSRMLS_CC));
+    uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0, NULL TSRMLS_CC));
 
     array_init(return_value);
     add_assoc_string(return_value, "device", device, 1);
