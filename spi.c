@@ -301,7 +301,7 @@ PHP_METHOD(Spi, blockTransfer)
         zend_hash_move_forward(data_hash)) {
 
         if(Z_TYPE_PP(arr_value) == IS_ARRAY) {
-            arr_value_hash = Z_ARRVAL_PP(arr_value);
+            arr_value_hash = Z_ARRVAL_P(arr_value);
             if(buffer == NULL) {
                 column_count = zend_hash_num_elements(arr_value_hash);
                 buffer = start = emalloc(row_count * column_count);
