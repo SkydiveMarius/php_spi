@@ -102,7 +102,7 @@ PHP_METHOD(Spi, __construct)
 
             zend_string *key;
             zend_ulong index;
-            long value = Z_LVAL_PP(data);
+            long value = Z_LVAL_P(data);
 
             if(zend_hash_get_current_key_ex(options_hash, &key, &index, NULL) == HASH_KEY_IS_STRING) {
                 // Assign the value accordingly
@@ -230,7 +230,7 @@ PHP_METHOD(Spi, transfer)
         arr_value = zend_hash_get_current_data(data_hash);
         zend_hash_move_forward(data_hash)) {
 
-        int byte = (int)Z_LVAL_PP(arr_value);
+        int byte = (int)Z_LVAL_P(arr_value);
         tx[i++] = byte;
     }
 
@@ -300,7 +300,7 @@ PHP_METHOD(Spi, blockTransfer)
         arr_value = zend_hash_get_current_data(data_hash);
         zend_hash_move_forward(data_hash)) {
 
-        if(Z_TYPE_PP(arr_value) == IS_ARRAY) {
+        if(Z_TYPE_P(arr_value) == IS_ARRAY) {
             arr_value_hash = Z_ARRVAL_P(arr_value);
             if(buffer == NULL) {
                 column_count = zend_hash_num_elements(arr_value_hash);
@@ -311,7 +311,7 @@ PHP_METHOD(Spi, blockTransfer)
                 sub_value = zend_hash_get_current_data(arr_value_hash);
                 zend_hash_move_forward(arr_value_hash)) {
 
-                int byte = (int)Z_LVAL_PP(sub_value);
+                int byte = (int)Z_LVAL_P(sub_value);
                 *buffer++ = byte;
             }
         } else {
@@ -387,7 +387,7 @@ PHP_METHOD(Spi, getInfo)
     uint16_t delay = Z_LVAL_P(zend_read_property(_this_ce, _this_zval, "delay", 5, 0, NULL TSRMLS_CC));
 
     array_init(return_value);
-    add_assoc_string(return_value, "device", device, 1);
+    add_assoc_string(return_value, "device", device);
     add_assoc_long(return_value, "spi_mode", mode);
     add_assoc_long(return_value, "bits_per_word", bits);
     add_assoc_long(return_value, "speed_hz", speed);
