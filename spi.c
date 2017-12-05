@@ -352,13 +352,13 @@ PHP_METHOD(Spi, blockTransfer)
         buffer = start;
         array_init(return_value);
         for(i = 0; i < row_count; ++i) {
-            zval *row;
-            ALLOC_INIT_ZVAL(row);
-            array_init(row);
+            zval row;
+
+            array_init(&row);
             for(j = 0; j < column_count; ++j) {
-                add_next_index_long(row, *buffer++);
+                add_next_index_long(&row, *buffer++);
             }
-            add_next_index_zval(return_value, row);
+            add_next_index_zval(return_value, &row);
         }
     }
     efree(buffer);
