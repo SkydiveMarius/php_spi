@@ -100,14 +100,13 @@ PHP_METHOD(Spi, __construct)
             data = zend_hash_get_current_data(options_hash);
             zend_hash_move_forward(options_hash)) {
 
-            char *key;
-            int len;
-            long index;
+            zend_string *key;
+            zend_ulong index;
             long value = Z_LVAL_PP(data);
 
-            if(zend_hash_get_current_key_ex(options_hash, &key, &len, &index, 1, NULL) == HASH_KEY_IS_STRING) {
+            if(zend_hash_get_current_key_ex(options_hash, &key, &index, NULL) == HASH_KEY_IS_STRING) {
                 // Assign the value accordingly
-                if(strncmp("mode", key, len) == 0) {
+                if(strncmp("mode", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
                     switch(value) {
                         case SPI_MODE_1:
                             mode = SPI_MODE_1;
@@ -123,13 +122,13 @@ PHP_METHOD(Spi, __construct)
                             break;
                     }
                 }
-                else if(strncmp("bits", key, len) == 0) {
+                else if(strncmp("bits", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
                     bits = value;
                 }
-                else if(strncmp("speed", key, len) == 0) {
+                else if(strncmp("speed", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
                     speed = value;
                 }
-                else if(strncmp("delay", key, len) == 0) {
+                else if(strncmp("delay", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
                     delay = value;
                 }
             }
