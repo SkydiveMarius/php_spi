@@ -95,9 +95,9 @@ PHP_METHOD(Spi, __construct)
         options_hash = HASH_OF(options);
 
         // Loop through the options array
-        zval **data;
+        zval *data;
         for(zend_hash_internal_pointer_reset(options_hash);
-            zend_hash_get_current_data(options_hash, (void **)&data) == SUCCESS;
+            data = zend_hash_get_current_data(options_hash);
             zend_hash_move_forward(options_hash)) {
 
             char *key;
@@ -226,9 +226,9 @@ PHP_METHOD(Spi, transfer)
     tx = emalloc(count);
 
     int i = 0;
-    zval **arr_value;
+    zval *arr_value;
     for(zend_hash_internal_pointer_reset(data_hash);
-        zend_hash_get_current_data(data_hash, (void **)&arr_value) == SUCCESS;
+        arr_value = zend_hash_get_current_data(data_hash);
         zend_hash_move_forward(data_hash)) {
 
         int byte = (int)Z_LVAL_PP(arr_value);
@@ -291,14 +291,14 @@ PHP_METHOD(Spi, blockTransfer)
     unsigned char *start  = NULL;
     unsigned char *tx     = NULL;
 
-    zval **arr_value;
-    zval **sub_value;
+    zval *arr_value;
+    zval *sub_value;
     zval *sub_arr;
     HashTable *arr_value_hash;
 
     int i, j = 0;
     for(zend_hash_internal_pointer_reset(data_hash);
-        zend_hash_get_current_data(data_hash, (void **)&arr_value) == SUCCESS;
+        arr_value = zend_hash_get_current_data(data_hash);
         zend_hash_move_forward(data_hash)) {
 
         if(Z_TYPE_PP(arr_value) == IS_ARRAY) {
@@ -309,7 +309,7 @@ PHP_METHOD(Spi, blockTransfer)
             }
 
             for(zend_hash_internal_pointer_reset(arr_value_hash);
-                zend_hash_get_current_data(arr_value_hash, (void **)&sub_value) == SUCCESS;
+                sub_value = zend_hash_get_current_data(arr_value_hash);
                 zend_hash_move_forward(arr_value_hash)) {
 
                 int byte = (int)Z_LVAL_PP(sub_value);
