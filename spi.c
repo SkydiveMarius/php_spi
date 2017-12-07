@@ -31,7 +31,8 @@
 #include <linux/types.h>
 #include <linux/spi/spidev.h>
 
-#define BCM2708_PERI_BASE        0x20000000
+/* ToDo: Implement use of bcm_host_get_peripheral_address() */
+#define BCM2708_PERI_BASE        0x3F000000
 #define TIMER_BASE               (BCM2708_PERI_BASE + 0x00B000)
 volatile unsigned *timer;
 
@@ -399,6 +400,7 @@ PHP_METHOD(Spi, getInfo)
    */
 PHP_METHOD(Spi, setupTimer)
 {
+    printf("setupTimer: start\n");
     zend_class_entry * _this_ce;
 
     zval * _this_zval = NULL;
