@@ -93,46 +93,35 @@ PHP_METHOD(Spi, __construct)
     uint16_t delay = 0;
 
     if(options != NULL) {
-        options_hash = HASH_OF(options);
-
-        // Loop through the options array
         zval *data;
-        for(zend_hash_internal_pointer_reset(options_hash);
-            data = zend_hash_get_current_data(options_hash);
-            zend_hash_move_forward(options_hash)) {
+        options_hash = Z_ARRVAL_P(options);
 
-            zend_string *key;
-            zend_ulong index;
-            long value = Z_LVAL_P(data);
+        if ((data = zend_hash_str_find(options_hash, "mode", strlen("mode")))) {
+            long value = zval_get_long(data);
+		    switch(value) {
+		        case SPI_MODE_1:
+			        mode = SPI_MODE_1;
+			        break;
+			    case SPI_MODE_2:
+				    mode = SPI_MODE_2;
+				    break;
+			    case SPI_MODE_3:
+				    mode = SPI_MODE_3;
+				    break;
+			    default:
+				    mode = SPI_MODE_0;
+				    break;
+		    }
+        }
 
-            if(zend_hash_get_current_key_ex(options_hash, &key, &index, NULL) == HASH_KEY_IS_STRING) {
-                // Assign the value accordingly
-                if(strncmp("mode", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
-                    switch(value) {
-                        case SPI_MODE_1:
-                            mode = SPI_MODE_1;
-                            break;
-                        case SPI_MODE_2:
-                            mode = SPI_MODE_2;
-                            break;
-                        case SPI_MODE_3:
-                            mode = SPI_MODE_3;
-                            break;
-                        default:
-                            mode = SPI_MODE_0;
-                            break;
-                    }
-                }
-                else if(strncmp("bits", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
-                    bits = value;
-                }
-                else if(strncmp("speed", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
-                    speed = value;
-                }
-                else if(strncmp("delay", ZSTR_VAL(key), ZSTR_LEN(key)) == 0) {
-                    delay = value;
-                }
-            }
+        if ((data = zend_hash_str_find(options_hash, "bits", strlen("bits")))) {
+          bits = zval_get_long(data);
+        }
+        if ((data = zend_hash_str_find(options_hash, "speed", strlen("speed")))) {
+          speed = zval_get_long(data);
+        }
+        if ((data = zend_hash_str_find(options_hash, "delay", strlen("delay")))) {
+          delay = zval_get_long(data);
         }
     }
 
